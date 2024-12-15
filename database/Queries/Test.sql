@@ -1,0 +1,2 @@
+INSERT INTO test(words)
+VALUES("HELP")

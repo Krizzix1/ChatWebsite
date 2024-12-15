@@ -3,6 +3,3 @@ CREATE TABLE test(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     words TEXT
 );
-
-INSERT INTO test (words)
-VALUES("HELLO")
