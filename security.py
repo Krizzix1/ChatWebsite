@@ -11,3 +11,6 @@ def gen_salt():
 def hash_pass(password, salt):
     print(f"Password: {password}, Salt: {salt}, Password + Salt: {password + salt}")
     return hashlib.sha256((password + salt).encode('utf-8')).hexdigest()
+
+def gen_secret_key():
+    return secrets.token_hex(16)

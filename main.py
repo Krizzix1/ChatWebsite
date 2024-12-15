@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, session
 
-import database
+import database, security
 
 app = Flask(__name__)
+
+#figure out this more later however its needed to stop users going straight to home page without logging in
+app.secret_key = security.gen_secret_key()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -22,6 +25,7 @@ def login():
         password = request.form["password"]
         if database.existing_user(username):
             if database.validate_user_password(username, password):
+                session["username"] = username
                 return redirect(url_for("main"))
             else:
                 print("Incorrect password")
@@ -45,6 +49,9 @@ def signup():
 
 @app.route("/main")
 def main():
+    if "username" not in session:
+        print("You must login first")
+        return redirect(url_for("login"))
     return render_template("main.html")
 
 
