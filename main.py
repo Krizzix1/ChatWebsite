@@ -23,14 +23,38 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if database.existing_user(username):
-            if database.validate_user_password(username, password):
-                session["username"] = username
-                return redirect(url_for("main"))
-            else:
-                print("Incorrect password")
-        else:
+
+        '''
+        The following is an example of good code
+        the readability is improved by using a method
+        known as "early return"
+        '''
+
+        if not database.existing_user(username):
             print(f"user {username} does not exist")
+            return render_template("login.html")
+        if not database.validate_user_password(username, password):
+            print("Incorrect password")
+            return render_template("login.html")
+        session["username"] = username
+        return redirect(url_for("main"))
+    
+        '''
+        The following is the same code as above but coded
+        in a worse format regarding readability
+        leaving these comments here as an example of how
+        to improve code readability
+        '''
+
+        # if database.existing_user(username):
+        #     if database.validate_user_password(username, password):
+        #         session["username"] = username
+        #         return redirect(url_for("main"))
+        #     else:
+        #         print("Incorrect password")
+        # else:
+        #     print(f"user {username} does not exist")
+        
     return render_template("login.html")
 
 
