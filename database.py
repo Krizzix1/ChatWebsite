@@ -3,9 +3,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import security
 
+
 engine = create_engine("sqlite:///database/testBase.db", echo=False)
 
 Base = declarative_base()
+
 
 class Users(Base):
     __tablename__ = "users"
@@ -18,6 +20,7 @@ class Users(Base):
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
+
 
 def add_user(username, password):
     with Session() as session:
@@ -54,6 +57,7 @@ def query_all():
         rows = session.query(Users).all()
         for row in rows:
             print(row)
+
 
 def existing_user(username):
     with Session() as session:
