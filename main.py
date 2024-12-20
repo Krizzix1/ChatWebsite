@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, session
+from flask import Flask, render_template, url_for, redirect, jsonify, request, session
 
 import database, security
 
@@ -6,6 +6,15 @@ app = Flask(__name__)
 
 #figure out this more later however its needed to stop users going straight to home page without logging in
 app.secret_key = security.gen_secret_key()
+
+public_key, private_key = security.gen_key_pair()
+print(f"\nPubKey {public_key}\n")
+
+
+@app.route("/public-key", methods=["GET"])
+def public_key_route():
+    return jsonify({"public_key" : public_key.decode()})
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -77,7 +86,6 @@ def main():
         print("You must login first")
         return redirect(url_for("login"))
     return render_template("main.html")
-
 
 
 app.run(host="localhost",port=5001)
