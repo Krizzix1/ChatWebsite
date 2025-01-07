@@ -2,12 +2,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+
+    <!-- Include crypto-js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js" integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- Include jsencrypt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js" integrity="sha512-94ncgEEqkuZ4yNTFmu2dSn1TJ6Ij+ANQqpR7eLVU99kzvYzu6UjBxuVoNHtnd29R+T6nvK+ugCVI698pbyEkvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Include axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </head>
 <body>
     <h1>Sign Up NOW Ho!!!!</h1>
-    <form method="POST">
-        <input type="text" id="username", name="username", placeholder="Username">
-        <input type="password" id="password", name="password", placeholder="Password">
-        <button type="submit">Submit</button>
-    </form>
-</body>
+    <input type="text" id="username", name="username", placeholder="Username">
+    <input type="password" id="password", name="password", placeholder="Password">
+    <button type="submit" onclick="handleSignIn()">Submit</button>
+    
+    <script>
+
+        function encrypt(message, publicKey) {
+            const jsEncrypt = new JSEncrypt();
+            jsEncrypt.setPublicKey(publicKey);
+            return jsEncrypt.encrypt(message);
+        }
+
+        function handleSignIn() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            if (!username || !password) {
+                alert("Password and Username are required");
+                return;
+            }
+
+            hashedPassword = password;
+            console.log(hashedPassword);
+            for (let i = 0; i < 10; i++) {
+                hashedPassword = CryptoJS.SHA256(hashedPassword).toString(CryptoJS.enc.Base64);
+                console.log(hashedPassword)
+            }
+            console.log(hashedPassword);
+            
+            $.get('/public-key', async function(data) {
+                const publicKey = data.public_key;
+                console.log("Public Key retrieved from server:", publicKey);
+
+                const ciphertext = encrypt(hashedPassword, publicKey);
+    
+                console.log("Encrypted Data (Base64):", ciphertext);
+
+                let encryptedMessage = {"username" : username, "password" : ciphertext};
+            
+                axios.post("http://localhost:5001/signup", encryptedMessage).catch(() => {
+                    console.log("Error connecting to flask server");
+                });
+            });
+        }
+    </script>

@@ -1,6 +1,8 @@
 import secrets
 import hashlib
+import base64
 from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_v1_5
 
 
 def gen_salt():
@@ -27,3 +29,12 @@ def gen_key_pair():
     public_key = keys.publickey().export_key()
 
     return public_key, private_key
+
+
+def decrypt(ciphertext, private_keyPEM):
+    ciphertext = base64.b64decode(ciphertext)
+    private_key = RSA.import_key(private_keyPEM)
+
+    cipher_rsa = PKCS1_v1_5.new(private_key)
+    decrypted_message = cipher_rsa.decrypt(ciphertext, None)
+    return decrypted_message.decode()

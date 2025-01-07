@@ -8,7 +8,15 @@ app = Flask(__name__)
 app.secret_key = security.gen_secret_key()
 
 public_key, private_key = security.gen_key_pair()
-print(f"\nPubKey {public_key}\n")
+
+public_key_str = public_key.decode('utf-8')
+private_key_str = private_key.decode('utf-8')
+
+# Now replace any literal '\\n' with actual newlines (if they exist in the decoded string)
+public_key_str = public_key_str.replace(r"\\n", "\n")
+private_key_str = private_key_str.replace(r"\\n", "\n")
+print(f"\nPubKey {public_key_str}\n")
+print(f"\nPubKey {private_key_str}\n")
 
 
 @app.route("/public-key", methods=["GET"])
@@ -30,8 +38,14 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+
+        login_data = request.get_json()
+
+        username = login_data.get("username")
+        password = login_data.get("password")
+
+        password = security.decrypt(password, private_key)
+        
 
         '''
         The following is an example of good code
@@ -70,13 +84,20 @@ def login():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+
+        signup_data = request.get_json()
+
+        username = signup_data.get("username")
+        password = signup_data.get("password")
+
+        password = security.decrypt(password, private_key)
+
         if database.existing_user(username):
             print(f"user {username} exists")
+            return jsonify({"message": "User already exists"}), 400
         else:
             database.add_user(username, password)
-            return redirect(url_for("login"))
+            return jsonify({"message": "Signup successful"}), 200
     return render_template("signup.html")
 
 
