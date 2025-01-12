@@ -57,7 +57,13 @@
 
                 let encryptedMessage = {"username" : username, "password" : ciphertext};
             
-                axios.post("http://localhost:5001/signup", encryptedMessage).catch(() => {
+                axios.post("http://localhost:5001/signup", encryptedMessage).then((response) => {
+                    if(response.data.redirect_url){
+                        window.location.href = response.data.redirect_url;
+                    }
+                })
+                
+                .catch(() => {
                     console.log("Error connecting to flask server");
                 });
             });

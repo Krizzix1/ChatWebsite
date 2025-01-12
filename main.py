@@ -60,7 +60,7 @@ def login():
             print("Incorrect password")
             return render_template("login.html")
         session["username"] = username
-        return redirect(url_for("main"))
+        return jsonify({"redirect_url": url_for("main")})
     
         '''
         The following is the same code as above but coded
@@ -97,16 +97,17 @@ def signup():
             return jsonify({"message": "User already exists"}), 400
         else:
             database.add_user(username, password)
-            return jsonify({"message": "Signup successful"}), 200
+            session["username"]=username
+            return jsonify({"redirect_url": url_for("main")}), 200
     return render_template("signup.html")
 
 
-@app.route("/main")
+@app.route("/main", methods=["GET","POST"])
 def main():
     if "username" not in session:
         print("You must login first")
         return redirect(url_for("login"))
-    return render_template("main.html")
+    return render_template("main.html", username=session["username"])
 
 
 app.run(host="localhost",port=5001)

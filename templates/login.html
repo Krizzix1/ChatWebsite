@@ -58,9 +58,16 @@
                 let encryptedMessage = {"username" : username, "password" : ciphertext};
 
                 // This link needs to be changed when hosted to contain correct IP
-                axios.post("http://localhost:5001/login", encryptedMessage).catch(() => {
+                axios.post("http://localhost:5001/login", encryptedMessage).then((response) => {
+                    if(response.data.redirect_url){
+                        window.location.href = response.data.redirect_url;
+                    }
+                })
+                
+                .catch(() => {
                     console.log("Error connecting to flask server");
                 });
+
             });
         }
     </script>
