@@ -35,7 +35,7 @@ def index():
     return render_template("home.html")
 
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["GET","POST"])
 def logout():
     session.pop("username", None)
     flash("You have been logged out")
@@ -43,7 +43,12 @@ def logout():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    print(session)
+    if "username" in session:
+        return redirect(url_for("main"))
     if request.method == "POST":
+
+
 
         login_data = request.get_json()
 
@@ -61,11 +66,11 @@ def login():
         if not database.existing_user(username):
             print(f"user {username} does not exist")
             flash("Incorrect username or password")
-            return redirect(url_for("login"))
+            return jsonify({"redirect_url": url_for("login")})
         if not database.validate_user_password(username, password):
             print("Incorrect password")
             flash("Incorrect username or password")
-            return redirect(url_for("login"))
+            return jsonify({"redirect_url": url_for("login")})
         session["username"] = username
         return jsonify({"redirect_url": url_for("main")})
     
