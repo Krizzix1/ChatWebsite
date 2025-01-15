@@ -20,7 +20,7 @@
     <h1>Sign Up NOW Ho!!!!</h1>
     <input type="text" id="username", name="username", placeholder="Username">
     <input type="password" id="password", name="password", placeholder="Password">
-    <button type="submit" onclick="handleSignIn()">Submit</button>
+    <button type="submit" id="subButton" onclick="handleSignIn()">Submit</button>
     
     <script>
 
@@ -29,6 +29,13 @@
             jsEncrypt.setPublicKey(publicKey);
             return jsEncrypt.encrypt(message);
         }
+
+        function handleEnter(event){
+            if(event.key === "Enter"){
+                document.getElementById("subButton").click();
+            }
+        }
+
 
         function handleSignIn() {
             var username = $("#username").val();
@@ -68,4 +75,8 @@
                 });
             });
         }
+
+        document.addEventListener('DOMContentLoaded',function(){
+            document.addEventListener('keydown',handleEnter);
+        });
     </script>

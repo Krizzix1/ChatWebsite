@@ -18,10 +18,17 @@
 </head>
 
 <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <h1>Login NOW Ho!!!!</h1>
     <input type="text" id="username" name="username" placeholder="Username">
     <input type="password" id="password" name="password" placeholder="Password">
-    <button type="submit" onclick="handleLogin()">Submit</button>
+    <button type="submit" id="subButton" onclick="handleLogin()">Login</button>
 
     <script>
 
@@ -30,6 +37,12 @@
             const jsEncrypt = new JSEncrypt();
             jsEncrypt.setPublicKey(publicKey);
             return jsEncrypt.encrypt(message);
+        }
+
+        function handleEnter(event){
+            if(event.key === "Enter"){
+                document.getElementById("subButton").click();
+            }
         }
 
         function handleLogin() {
@@ -70,6 +83,9 @@
 
             });
         }
+        document.addEventListener('DOMContentLoaded',function(){
+            document.addEventListener('keydown',handleEnter);
+        });
     </script>
 
 </body>

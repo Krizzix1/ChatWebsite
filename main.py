@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, jsonify, request, session
+from flask import Flask, render_template, url_for, redirect, jsonify, request, session, flash
 
 import database, security
 
@@ -35,6 +35,12 @@ def index():
     return render_template("home.html")
 
 
+@app.route("/logout", methods=["POST"])
+def logout():
+    session.pop("username", None)
+    flash("You have been logged out")
+    return redirect(url_for("index"))
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -52,13 +58,14 @@ def login():
         the readability is improved by using a method
         known as "early return"
         '''
-
         if not database.existing_user(username):
             print(f"user {username} does not exist")
-            return render_template("login.html")
+            flash("Incorrect username or password")
+            return redirect(url_for("login"))
         if not database.validate_user_password(username, password):
             print("Incorrect password")
-            return render_template("login.html")
+            flash("Incorrect username or password")
+            return redirect(url_for("login"))
         session["username"] = username
         return jsonify({"redirect_url": url_for("main")})
     
@@ -106,6 +113,7 @@ def signup():
 def main():
     if "username" not in session:
         print("You must login first")
+        flash("You must login first")
         return redirect(url_for("login"))
     return render_template("main.html", username=session["username"])
 
