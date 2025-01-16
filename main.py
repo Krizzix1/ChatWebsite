@@ -1,8 +1,10 @@
 from flask import Flask, render_template, url_for, redirect, jsonify, request, session, flash
+from Messages.messages import messageBP
 
 import database, security
 
 app = Flask(__name__)
+app.register_blueprint(messageBP, url_prefix="/messages")
 
 #figure out this more later however its needed to stop users going straight to home page without logging in
 app.secret_key = security.gen_secret_key()
