@@ -1,5 +1,5 @@
 -- SQLite
-CREATE TABLE test(
+CREATE TABLE users(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     userName TEXT UNIQUE,
     password TEXT,
@@ -9,7 +9,7 @@ CREATE TABLE test(
 CREATE TABLE chatRoom(
     id INTEGER,
     user TEXT,
-    PRIMARY KEY (id,user)
+    PRIMARY KEY (id,user),
     FOREIGN KEY (user) REFERENCES users(userName)
 
 );
