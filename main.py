@@ -108,7 +108,8 @@ def signup():
 
         if database.existing_user(username):
             print(f"user {username} exists")
-            return jsonify({"message": "User already exists"}), 400
+            flash("Username already exists")
+            return jsonify({"redirect_url": url_for("signup")})
         else:
             database.add_user(username, password)
             session["username"]=username
