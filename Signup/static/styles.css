@@ -1,15 +1,32 @@
 html, body {
+    /* background-color: rgb(30, 30, 30); */
+    background-image: linear-gradient(rgb(40, 40, 70), rgb(35, 35, 35))
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 100%;
-    margin: 0;
-    background-color: rgb(36, 36, 36);
 }
 
-
-.loginContainer{
-    max-width: fit-content;
-    margin-inline: auto;
+.center input, .center button {
+    margin: 5px;
 }
 
-.regButton{
-    color:aqua
+.lightFont {
+    font-family: Helvetica, Arial, sans-serif;
+    color: rgb(220, 220, 220);
+}
+
+.button {
+    border-radius: 10px;
+    width: 150px;
+    height: 30px;
+    transition: background-color 0.15s ease;
+}
+
+.button:hover {
+    background-color: rgb(195, 195, 195);
 }
