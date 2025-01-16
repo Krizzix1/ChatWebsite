@@ -40,4 +40,4 @@ def logout():
     return redirect(url_for("index"))
 
 
-app.run(host="localhost",port=5001)
+app.run(host="localhost",port=5001, debug=True)

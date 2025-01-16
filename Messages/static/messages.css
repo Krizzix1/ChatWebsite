@@ -27,7 +27,7 @@ html, body {
     padding-left: 5px; /* 5 pixel padding is default but leaving here to change later */
     border: 1px solid transparent;
     transition: background-color 0.15s ease;
-    transition: border 0.15 ease;
+    transition: border-color 0.15s ease;
     direction: ltr;
 }
 
