@@ -1,6 +1,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('signupBP.static', filename='styles.css') }}">
+
     <title>Sign Up</title>
 
     <!-- Include crypto-js -->
@@ -15,6 +17,7 @@
     <!-- Include axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
 </head>
 <body>
     {% with messages = get_flashed_messages() %}
@@ -25,10 +28,20 @@
         {% endif %}
     {% endwith %}
     <h1>Sign Up NOW Ho!!!!</h1>
-    <input type="text" id="username", name="username", placeholder="Username">
-    <input type="password" id="password", name="password", placeholder="Password">
-    <button type="submit" id="subButton" onclick="handleSignIn()">Submit</button>
+
+    <div class="loginContainer">
+        <input class="regButton" type="text" id="username", name="username", placeholder="Username">
+
+        <input class="regButton" type="password" id="password", name="password", placeholder="Password">
     
+        <button type="submit" id="subButton" onclick="handleSignIn()">Submit</button>
+
+    </div>
+
+
+
+
+</body>
     <script>
 
         function encrypt(message, publicKey) {
@@ -61,7 +74,7 @@
             }
             console.log(hashedPassword);
             
-            $.get('/public-key', async function(data) {
+            $.get('/login/public-key', async function(data) {
                 const publicKey = data.public_key;
                 console.log("Public Key retrieved from server:", publicKey);
 

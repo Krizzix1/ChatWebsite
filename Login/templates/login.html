@@ -1,4 +1,6 @@
 <head>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -15,6 +17,9 @@
    <!-- Include axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('loginBP.static', filename='styles.css')}}">
+    
 </head>
 
 <body>
@@ -61,7 +66,7 @@
             }
             console.log(hashedPassword);
             
-            $.get('/public-key', async function(data) {
+            $.get('/login/public-key', async function(data) {
                 const publicKey = data.public_key;
 
                 const ciphertext = encrypt(hashedPassword, publicKey);
@@ -70,7 +75,7 @@
 
                 let encryptedMessage = {"username" : username, "password" : ciphertext};
 
-                // This link needs to be changed when hosted to contain correct IP
+                // This link needs to be changed when hosted to contain correct IP 
                 axios.post("http://localhost:5001/login", encryptedMessage).then((response) => {
                     if(response.data.redirect_url){
                         window.location.href = response.data.redirect_url;
