@@ -1,14 +1,17 @@
+{% extends "base.html" %}
+
+{%block content%}
 <head></head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
 </head>
 <body>
-    <h1>Login Successful Ho!</h1>
-    <h2>Welcome, {{ username }}!</h2>
+    <div class="test">
+        <h1>Login Successful Ho!</h1>
+        <h2>Welcome, {{ username }}!</h2>
+    </div>
 
-    <form method="POST" action="{{ url_for('logout') }}">
-        <button type="submit" id="messages" >Logout</button>
-    </form>
 </body>
 </html>
+{%endblock%}

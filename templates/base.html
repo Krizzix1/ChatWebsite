@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/base.css">
+</head>
+{%block content%}
+{%endblock%}
+<div class="navbar">
+        <a href="{{ url_for('logout') }}">logout</a>
+        <a href="{{ url_for('messageBP.inbox')}}">messages</a>
+</div>
+
