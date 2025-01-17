@@ -1,19 +1,51 @@
-.navbar{
-    position:fixed;
-    width:80px;
-    height:100vh;
-    display:flex;
+.navbar {
+    position: fixed;
+    width: 10vw;
+    height: 100vh;
+    display: flex;
     flex-direction: column;
-    background-color: rgb(83, 83, 83);
-    padding:0px;
-    top:0px;
-    left:0px;
+    background-color: rgb(40, 40, 40);
+    /* padding: 5px; */
+    top: 0px;
+    left: 0px;
+    margin-top: 5vh;
 }
 
 .navbar a {
-    
-    padding:15px 25px;
-    color:blue;
-    display:block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 2vw;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: auto;
+    color: blue;
+    width: 100%;
+    text-decoration: none;
+    white-space: nowrap;
+    justify-content: center;
+    transition: color;
+}
 
+.navbar a:hover {
+    color: rgb(0, 0, 200);
+}
+
+.searchbar {
+    width: 100vw;
+    height: 5vh;
+    background-color: rgb(25, 25, 25);
+    display: flex;
+    position: fixed;
+    top: 0px;
+}
+
+.searchbar input{
+    justify-content: center;
+    border-radius: 30px;
+    width: 30vw;
+    height: 3vh;
+    padding: 5px;
+    margin-left: 50vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
 }

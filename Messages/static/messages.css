@@ -11,10 +11,13 @@ html, body {
 }
 
 .message-list {
+    /* message list is scrollable from the far right for some reason */
     width: 10%;
     overflow-y: scroll;
     background-color: rgb(50, 50, 50);
-    height: 100%;
+    height: 95%;
+    margin-left: 10vw;
+    margin-top: 5vh;
 }
 
 .user {
