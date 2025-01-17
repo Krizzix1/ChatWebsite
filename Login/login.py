@@ -17,13 +17,10 @@ def public_key_route():
 @loginBP.route("/", methods=["GET", "POST"])
 def login():
     print(session)
-    if "username" in session:
-        return redirect(url_for("main"))
     if request.method == "POST":
 
-
-
         login_data = request.get_json()
+        session.pop("username",None)
 
         username = login_data.get("username")
         password = login_data.get("password")
@@ -62,7 +59,10 @@ def login():
         #         print("Incorrect password")
         # else:
         #     print(f"user {username} does not exist")
-        
+    
+    else:
+        if "username" in session:
+            return redirect(url_for("main"))
     return render_template("login.html")
 
 
