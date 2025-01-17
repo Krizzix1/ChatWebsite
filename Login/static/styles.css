@@ -1,6 +1,12 @@
 html, body {
     /* background-color: rgb(30, 30, 30); */
-    background-image: linear-gradient(rgb(40, 40, 70), rgb(35, 35, 35))
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 1)),
+        url('mountains.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    margin: 0px;
 }
 
 .center {
@@ -8,7 +14,8 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    border: 5px;
+    height: 100vh;
 }
 
 .center input, .center button {
@@ -17,7 +24,8 @@ html, body {
 
 .lightFont {
     font-family: Helvetica, Arial, sans-serif;
-    color: rgb(220, 220, 220);
+    font-size: 20;
+    color: rgb(255, 255, 255);
 }
 
 .button {
